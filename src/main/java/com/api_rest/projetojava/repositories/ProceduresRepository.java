@@ -15,5 +15,3 @@ public interface ProceduresRepository extends JpaRepository<Procedures, Long> {
     List<Procedures> findProceduresByConsultId(@Param("consultId") Long id);
 
 }
-
-//TESTAR SE ISSO AQUI VAI FUNCIONAR
