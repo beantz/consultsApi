@@ -56,7 +56,6 @@ public class Consults {
         this.dateConsult = dateConsult;
     }
 
-    //metodo usada para inserir o id de usuario
     public void setPatient(Patients patient){
         this.patient = patient; 
     }

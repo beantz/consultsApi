@@ -125,7 +125,6 @@ public class ControllerConsults {
 
 		if(result.isPresent()){
 			//pegando os dados atuais
-            //ver se isso aqui da pra passar pelo autowired 
 			Consults consults = result.get();
 			consults.setDateConsult(updatedConsult.getDateConsult());
 

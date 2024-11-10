@@ -30,7 +30,6 @@ public class ServiceConsult {
         //validar se os campos não estão vazios
         if(dateHours != null){
 
-            //consultsRepository.save(newConsults);
             return ResponseEntity.ok(dateHours);
 
         } else {

@@ -88,7 +88,6 @@ public class ServicePatients {
 
     }
     
-    //
     public <S extends Patients> List<S> findAll(Example<S> example, Sort sort) {
         return patientsRepository.findAll(example, sort);
     }

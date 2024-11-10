@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tb_instructions")
 public class Instructions {
@@ -18,12 +20,11 @@ public class Instructions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //o que pode e não pode fazer, comer
     private String instructions;
 
-    //remedios
     private String medicines;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "instructions")
     private Procedures procedures;
 

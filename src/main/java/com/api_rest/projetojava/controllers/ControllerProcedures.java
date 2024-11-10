@@ -87,9 +87,9 @@ public class ControllerProcedures {
         
     }
 
-    //retornar todos os procedimentos de uma consulta
+    //retornar todos os procedimentos de uma consulta List<Procedures>
     @GetMapping("/ConsultarProcedimentos/{id}")
-	public ResponseEntity<List<Procedures>> findAllProcedures(@PathVariable Long id){
+	public ResponseEntity<?> findAllProcedures(@PathVariable Long id){
 
 		List<Procedures> result = proceduresrepository.findProceduresByConsultId(id);
 
@@ -99,11 +99,7 @@ public class ControllerProcedures {
 
         } else {
 
-            //ver esse retorno aqui
-            
-            //necessario esse tipo de retorno pq meu metodo espera um responseentity encapsulando uma lista de procedures
-            //retorna o 404 se não encontrar
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não entrada, verifique o id passado.");
 
         }
 
@@ -127,28 +123,5 @@ public class ControllerProcedures {
 		}
 
 	}
-
-    //me retornar todos as orientações de um determinado procedimento
-    /*@GetMapping("/ConsultarProcedimentos/{id}")
-	public ResponseEntity<List<Instructions>> findAllInstructions(@PathVariable Long id){
-
-        //tentar fazer isso aqui na mão mesmo
-		List<Instructions> result = proceduresrepository.findById(id);
-
-        if(!result.isEmpty()){
-
-            return ResponseEntity.ok(result);
-
-        } else {
-
-            //ver esse retorno aqui
-            
-            //necessario esse tipo de retorno pq meu metodo espera um responseentity encapsulando uma lista de procedures
-            //retorna o 404 se não encontrar
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        }
-
-	}*/
 
 }
