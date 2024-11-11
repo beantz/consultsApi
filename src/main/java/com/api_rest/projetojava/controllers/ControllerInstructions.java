@@ -68,7 +68,7 @@ public class ControllerInstructions {
 
         } else {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Procedimento não encontrada, verifique o id passado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Procedimento de id "+id+" não encontrada, verifique o id passado.");
 
         }
         
@@ -87,7 +87,7 @@ public class ControllerInstructions {
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Instrução não encontrada! tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Instrução de id "+id+" não encontrada! tente novamente.");
 
 		}
 

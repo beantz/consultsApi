@@ -1,3 +1,3 @@
-public class Repository {
+public class ControllerRepository {
     
 }

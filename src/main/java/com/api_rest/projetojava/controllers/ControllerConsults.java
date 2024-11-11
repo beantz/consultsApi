@@ -21,9 +21,8 @@ import com.api_rest.projetojava.entities.Consults;
 import com.api_rest.projetojava.entities.Patients;
 import com.api_rest.projetojava.repositories.ConsultsRepository;
 import com.api_rest.projetojava.repositories.PatientsRepository;
-import com.api_rest.projetojava.Service.ServiceConsult;
-import com.api_rest.projetojava.Service.ServicePatients;
-
+import com.api_rest.projetojava.service.ServiceConsult;
+import com.api_rest.projetojava.service.ServicePatients;
 
 @RestController
 @RequestMapping(value="/Consultas")
@@ -84,7 +83,7 @@ public class ControllerConsults {
 			// Se qualquer etapa falhar, retorne um erro indicando dados inválidos
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao processar a consulta: dados inválidos.");
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO! O paciente precisa estar cadastrado para realizar uma consulta.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO! não foi encontrado paciente com id "+id+" O paciente precisa estar cadastrado para realizar uma consulta.");
 		}
 
 	}
@@ -111,7 +110,7 @@ public class ControllerConsults {
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada! Id pode está errado, tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta de "+id+" não encontrada! Id pode está errado, tente novamente.");
 
 		}
 
@@ -133,7 +132,7 @@ public class ControllerConsults {
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada! Id pode está errado, tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta de id "+id+" não encontrada! Id pode está errado, tente novamente.");
 
 		}
 

@@ -1,4 +1,4 @@
-package com.api_rest.projetojava.Service;
+package com.api_rest.projetojava.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

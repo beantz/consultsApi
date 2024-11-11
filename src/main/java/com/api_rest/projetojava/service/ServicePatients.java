@@ -1,4 +1,4 @@
-package com.api_rest.projetojava.Service;
+package com.api_rest.projetojava.service;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
@@ -82,7 +82,7 @@ public class ServicePatients {
 
         } else {
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado! Tente novamente.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário de id "+id+" não encontrado! Tente novamente.");
 
         }
 

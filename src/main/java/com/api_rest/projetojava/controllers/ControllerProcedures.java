@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 import java.util.List;
 
-
 @RestController
 @RequestMapping(value="/Procedimentos")
 public class ControllerProcedures {
@@ -75,13 +74,13 @@ public class ControllerProcedures {
 
             } else {
 
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Paciente não encontrada.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Paciente de id "+id+" não encontrada.");
 
             }
 
         } else {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Consulta não encontrada.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Consulta de id "+id+" não encontrada.");
 
         }
         
@@ -99,7 +98,7 @@ public class ControllerProcedures {
 
         } else {
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não entrada, verifique o id passado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada, verifique o id passado.");
 
         }
 
@@ -118,7 +117,7 @@ public class ControllerProcedures {
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Procedimento não encontrado! Id pode está errado, tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Procedimento de id "+id+" não encontrado! Id pode está errado, tente novamente.");
 
 		}
 

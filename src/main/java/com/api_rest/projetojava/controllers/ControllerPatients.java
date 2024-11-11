@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.api_rest.projetojava.entities.Patients;
 import com.api_rest.projetojava.repositories.PatientsRepository;
-import com.api_rest.projetojava.Service.ServicePatients;
+import com.api_rest.projetojava.service.ServicePatients;
 
 @RestController
 @RequestMapping(value="/pacientes")
@@ -59,7 +59,7 @@ public class ControllerPatients {
 
 			} else {
 
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Numero de telefone ja cadastrado.");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Numero de telefone "+newPatient.getNumber()+" ja cadastrado.");
 
 			}
 
@@ -84,7 +84,7 @@ public class ControllerPatients {
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado! tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario de id "+id+" não encontrado! tente novamente.");
 
 		}
 
@@ -109,7 +109,7 @@ public class ControllerPatients {
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado! tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario de id "+id+" não encontrado! tente novamente.");
 
 		}
 
