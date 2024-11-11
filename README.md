@@ -10,4 +10,5 @@
 
 ## Como usar
 
-1 .
+1 . clone repositório `https://github.com/beantz123/projeto_java`
+    
