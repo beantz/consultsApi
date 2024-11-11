@@ -22,7 +22,7 @@
 
 4 . Acessar as rotas 
 
-     - apenas rota Consultas não precisa de autenticação todas as outras precisarão, então, no postman você vai em Authorization, clique em Auth Type, selecione Basic Auth e forneça o usuario e senha definidos no arquivo CustomBasicAuthFilter, apos isso só inserir a url.
+     - apenas rota Consultas não precisa de autenticação todas as outras irão precisar, então, no postman você vai em Authorization, clique em Auth Type, selecione Basic Auth e forneça o usuario e senha definidos no arquivo CustomBasicAuthFilter, apos isso só inserir a url.
 
      GET http://localhost:8090/<nome do controller>
      GET http://localhost:8090/<nome do controller>/<id_para_retornar_um_paciente>
