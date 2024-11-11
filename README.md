@@ -14,8 +14,8 @@
 
 2 . No arquivo application.properties configure seu banco de dados, inserindo nome de usuario e a senha.
     ```spring.datasource.url=jdbc:mysql://localhost:3306/nome_do_banco  
-    spring.datasource.username=usuario  
-    spring.datasource.password=senha ```
+        spring.datasource.username=usuario  
+        spring.datasource.password=senha ```
 
      
     
