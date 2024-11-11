@@ -25,8 +25,8 @@
 
 5 . Docker
     - Construir e rodar a imagem
-        ` docker run -p 8090:8090 spring-boot-projetojava:1.0
-          docker build -t spring-boot-projetojava:1.0 .`
+        ``` docker run -p 8090:8090 spring-boot-projetojava:1.0
+            docker build -t spring-boot-projetojava:1.0 .
 
      
     
