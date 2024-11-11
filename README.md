@@ -20,7 +20,8 @@
     
 3 . A API vai ta disponivel em `http://localhost:8090`
 
-4 . Acessar as rotas que possuem ou não id
+4 . Acessar as rotas 
+     - apenas rota Consultas não precisa de autenticação, então, no postman você vai em Authorization, clique em Auth Type, selecione Basic Auth e forneça o usuario e senha definidos no arquivo CustomBasicAuthFilter, apos isso só inserir a url 
 
 5 . Docker
     - Construir e rodar a imagem
