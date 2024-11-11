@@ -14,7 +14,6 @@
 
 2 . no arquivo application.properties configure seu banco de dados, inserindo nome de usuario e a senha.
     `spring.datasource.username=${DB_USERNAME}`
-
     `spring.datasource.password=${DB_PASSWORD}`
      
     
