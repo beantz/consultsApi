@@ -21,8 +21,14 @@
 3 . A API vai ta disponivel em `http://localhost:8090`
 
 4 . Acessar as rotas 
-     - apenas rota Consultas não precisa de autenticação, então, no postman você vai em Authorization, clique em Auth Type, selecione Basic Auth e forneça o usuario e senha definidos no arquivo CustomBasicAuthFilter, apos isso só inserir a url 
+     - apenas rota Consultas não precisa de autenticação todas as outras precisarão, então, no postman você vai em Authorization, clique em Auth Type, selecione Basic Auth e forneça o usuario e senha definidos no arquivo CustomBasicAuthFilter, apos isso só inserir a url.
 
+     GET http://localhost:8090/<nome do controller>
+     GET http://localhost:8090/<nome do controller>/<id_para_retornar_um_paciente>
+     POST http://localhost:8090/<nome do controller>/<id_para_cadastrar>
+     PUT http://localhost:8090/<nome do controller>/<id_para_atualizar>
+     DELETE http://localhost:8090/<nome do controller>/<id_para_excluirr>
+     
 5 . Docker
     - Construir e rodar a imagem
     
