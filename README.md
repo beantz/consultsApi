@@ -12,7 +12,7 @@
 
 1 . Clone repositório `git clone https://github.com/beantz123/projeto_java`.
 
-2 . No arquivo application.properties configure seu banco de dados inserindo nome do banco, seu nome usuario e a senha.
+2 . No arquivo __application.properties__ configure seu banco de dados inserindo nome do banco, seu nome usuario e a senha.
 
     ```properties
     spring.datasource.url=jdbc:mysql://localhost:3306/nome_do_banco
