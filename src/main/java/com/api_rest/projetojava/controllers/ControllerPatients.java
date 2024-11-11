@@ -98,15 +98,24 @@ public class ControllerPatients {
 		Optional<Patients> result = patientsRepository.findById(id);
 
 		if(result.isPresent()){
-			//pegando os dados atuais
-			Patients patient = result.get();
-			patient.setName(updatedPatient.getName());
-			patient.setCity(updatedPatient.getCity());
-			patient.setNumber(updatedPatient.getNumber());
 
-			patientsRepository.save(patient);
-			return ResponseEntity.ok("Paciente atualizado com sucesso!");
+			if(!patientsservice.verifyNumber(updatedPatient)){
 
+				//pegando os dados atuais
+				Patients patient = result.get();
+				patient.setName(updatedPatient.getName());
+				patient.setCity(updatedPatient.getCity());
+				patient.setNumber(updatedPatient.getNumber());
+
+				patientsRepository.save(patient);
+				return ResponseEntity.ok("Paciente atualizado com sucesso!");
+
+			} else {
+
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Numero de telefone "+updatedPatient.getNumber()+" já está cadastrado.");
+
+			}
+			
 		} else {
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario de id "+id+" não encontrado! tente novamente.");
