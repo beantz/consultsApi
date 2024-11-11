@@ -10,6 +10,6 @@
 
 ## Como usar
 
-1 . clone repositório `https://github.com/beantz123/projeto_java`
+1 . clone repositório `https://github.com/beantz123/projeto_java`.
 2 . no arquivo application.properties configure seu banco de dados, inserindo nome de usuario e a senha.
     
