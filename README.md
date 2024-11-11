@@ -18,6 +18,7 @@
     spring.datasource.url=jdbc:mysql://localhost:3306/nome_do_banco
     spring.datasource.username=usuario
     spring.datasource.password=senha
+3 . a API vai ta disponivel em `http://localhost:8090`
 
 
      
