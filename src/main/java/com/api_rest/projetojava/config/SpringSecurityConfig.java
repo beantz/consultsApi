@@ -22,7 +22,7 @@ public class SpringSecurityConfig {
         http
             .authorizeHttpRequests(
                     authorizeConfig -> {
-                        authorizeConfig.requestMatchers("/consultas/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
+                        authorizeConfig.requestMatchers("/api/Consultas", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                         authorizeConfig.anyRequest().authenticated();
                     }
             )

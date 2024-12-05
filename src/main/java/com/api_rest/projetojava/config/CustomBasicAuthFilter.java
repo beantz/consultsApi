@@ -25,10 +25,12 @@ public class CustomBasicAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         var headerAuthorization = request.getHeader("Authorization");
+   
         if (headerAuthorization == null || !headerAuthorization.startsWith("Basic ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        filterChain.doFilter(request, response);
+        return;
+        }  
+
         var basicToken = headerAuthorization.substring(BASIC_LENGTH);
         byte[] basicTokenDecoded = Base64.getDecoder().decode(basicToken);
         String basicTokenValue = new String(basicTokenDecoded);
@@ -39,6 +41,7 @@ public class CustomBasicAuthFilter extends OncePerRequestFilter {
             var authToken = new UsernamePasswordAuthenticationToken(basicAuthsSplit[0], null, null);
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
+
         filterChain.doFilter(request, response);
     }
 }
