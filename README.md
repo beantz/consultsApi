@@ -7,6 +7,7 @@
 - java 17
 - MySQL
 - Docker
+- Swagger
 
 ### Como usar
 
@@ -32,8 +33,12 @@
      
 5 . Docker
     - Construir e rodar a imagem
-    
+        
         docker run -p 8090:8090 spring-boot-projeto_java:1.0
         docker build -t spring-boot-projeto_java:1.0 .
+
+6 . Acessar e testar as rotas pelo Swagger
+   - jogar essa url no na navegador http://localhost:8090/swagger-ui/index.html#/
+    
 
      
