@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(value="/Instruções")
 public class ControllerInstructions {
@@ -32,9 +37,17 @@ public class ControllerInstructions {
     @Autowired
     private PatientsRepository patientsrepository;
 
+    @Operation(summary = "Criar instruções para um procedimento existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Instrução inserida com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Procedimento não encontrado, verifique o ID passado")
+    })
     //criar uma instruction
     @PostMapping(value="/CriarInstruções/{id}")
-	public ResponseEntity<?> insert(@RequestBody Instructions newInstructions, @PathVariable Long id) {
+	public ResponseEntity<?> insert(@Parameter(description = "Instruções a serem criadas", required = true) 
+        @RequestBody Instructions newInstructions,
+        @Parameter(description = "ID do procedimento ao qual as instruções serão vinculadas", required = true) 
+        @PathVariable Long id) {
 
         //verificar se o id da procedures é valido e retornar um obj da procedures
         Optional<Procedures> proceduresOptional = proceduresrepository.findById(id);
@@ -47,11 +60,8 @@ public class ControllerInstructions {
 
             Instructions instruction = new Instructions();
 
-            String instructions = newInstructions.getInstructions();
+            instruction.setInstructions(newInstructions.getInstructions());
             String medicines = newInstructions.getMedicines();
-
-            //inserir nome do procedimento
-            instruction.setInstructions(instructions);
 
             //inseir remedio indicados
             instruction.setMedicines(medicines);
@@ -64,7 +74,6 @@ public class ControllerInstructions {
             instructionrepository.save(instruction);
 
             return ResponseEntity.ok("Instrução inserida com sucesso.");
-            
 
         } else {
 
@@ -74,9 +83,15 @@ public class ControllerInstructions {
         
     }
 
+    @Operation(summary = "Deletar uma instrução por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Instrução deletada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Instrução não encontrada, tente novamente")
+    })
     //deletar a instrução
     @DeleteMapping(value="/deletar/{id}")
-	public ResponseEntity<String> Delete(@PathVariable Long id){
+	public ResponseEntity<String> Delete(@Parameter(description = "ID da instrução a ser deletada", required = true) 
+        @PathVariable Long id) {
 
 		Optional<Instructions> result = instructionrepository.findById(id);
 

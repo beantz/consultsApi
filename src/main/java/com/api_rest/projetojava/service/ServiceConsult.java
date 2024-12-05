@@ -1,4 +1,4 @@
-package com.api_rest.projetojava.service;
+package com.api_rest.projetojava.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -61,21 +61,6 @@ public class ServiceConsult {
             throw new IllegalArgumentException("Tipo inesperado: " + body.getClass().getName());
 
         }
-
-    }
-
-    public void create(Consults consult){
-
-        //vai pegar o id de patient em consult e retornar o patients do id e guardar em result
-        Optional<Patients> result = patientsRepository.findById(consult.getId());
-
-        Consults newConsult = new Consults();
-        Patients patient = result.get(); //pegando o obj de patients e jogando na varialvel patient
-
-        //mandando para um obj de uma nova consulta os dados de data e o obj de patient
-        newConsult.setDateConsult(consult.getDateConsult());
-        newConsult.setPatient(patient);
-        consultsRepository.save(newConsult);
 
     }
 

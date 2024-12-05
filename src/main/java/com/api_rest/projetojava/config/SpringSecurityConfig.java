@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import com.api_rest.projetojava.config.SwaggerConfig;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -18,16 +20,16 @@ public class SpringSecurityConfig {
             CustomBasicAuthFilter customBasicAuthFilter) throws Exception {
 
         http
-                .authorizeHttpRequests(
-                        authorizeConfig -> {
-                            authorizeConfig.requestMatchers("/Consultas").permitAll();
-                            authorizeConfig.anyRequest().authenticated();
-                        }
-                )
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(customBasicAuthFilter, BasicAuthenticationFilter.class)
-                .csrf().disable();
+            .authorizeHttpRequests(
+                    authorizeConfig -> {
+                        authorizeConfig.requestMatchers("/consultas/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
+                        authorizeConfig.anyRequest().authenticated();
+                    }
+            )
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(customBasicAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .csrf().disable();
 
         return http.build();
     }

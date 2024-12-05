@@ -21,15 +21,19 @@ import com.api_rest.projetojava.entities.Consults;
 import com.api_rest.projetojava.entities.Patients;
 import com.api_rest.projetojava.repositories.ConsultsRepository;
 import com.api_rest.projetojava.repositories.PatientsRepository;
-import com.api_rest.projetojava.service.ServiceConsult;
-import com.api_rest.projetojava.service.ServicePatients;
+import com.api_rest.projetojava.Service.ServiceConsult;
+import com.api_rest.projetojava.Service.ServicePatients;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping(value="/Consultas")
+@RequestMapping("/api/consultas")
 public class ControllerConsults {
 
-    //essa anotação instrui o spring a fornecer essas dependências
-    @Autowired
+	@Autowired
 	private PatientsRepository patientsRepository;
 
 	@Autowired
@@ -41,53 +45,62 @@ public class ControllerConsults {
 	@Autowired
 	private ServiceConsult consultservice;
 
-    //criar uma consulta
-    @PostMapping(value="/NovaConsulta/{id}")
-	public ResponseEntity<?>  insert(@RequestBody Consults newConsults, @PathVariable Long id) {
+    @Operation(
+        summary = "Marcar nova consulta",
+        description = "Cria uma nova consulta para um paciente existente, verificando se o paciente está cadastrado e se a data é válida."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Consulta marcada com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Erro ao processar a consulta: dados inválidos ou data incorreta"),
+        @ApiResponse(responseCode = "404", description = "Paciente não encontrado")
+    })
 
-		//Verificar se o paciente já está cadastrado
-		if (patientsservice.verifyPatients(id)) {
+    @PostMapping(value = "/NovaConsulta/{id}")
+    public ResponseEntity<?> insert(
+        @Parameter(description = "ID do paciente", example = "1")
+        @PathVariable Long id,
+        
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Objeto da consulta contendo os detalhes da nova consulta"
+        )
+        @RequestBody Consults newConsults
+    ) {
+        // Verificar se o paciente está cadastrado
+        if (patientsservice.verifyPatients(id)) {
 
-			// Verificar se a data não está vazia e retornar ela
-			ResponseEntity<Object> dateHoursResponse = consultservice.verifyDate(newConsults);
+            Optional<Patients> optionalPatient = patientsRepository.findById(id);
+            Patients patient = optionalPatient.get();
 
-			//vai verificar o tipo e me retornar um tipo unico q eu preciso
-			Object resultDate = consultservice.verifyType(dateHoursResponse);
+            // Verificar se a data não está vazia e retornar ela
+            ResponseEntity<Object> dateHoursResponse = consultservice.verifyDate(newConsults);
 
-			if(resultDate instanceof LocalDateTime){
+            // Verificar o tipo de dado retornado
+            Object resultDate = consultservice.verifyType(dateHoursResponse);
 
-				LocalDateTime dateHours = (LocalDateTime) resultDate;
+            if (resultDate instanceof LocalDateTime) {
+                LocalDateTime dateHours = (LocalDateTime) resultDate;
 
-				// Retornar um objeto de consulta com o ID do paciente
-				ResponseEntity<Object> consultResponse = patientsservice.findById(id, false);
+                Consults consult = new Consults();
+                consult.setDateConsult(dateHours);
+                consult.setPatient(patient);
+                consultsRepository.save(consult);
 
-				//vai verificar o tipo e me retornar um tipo unico q eu preciso
-				Object resultConsult = consultservice.verifyType(consultResponse);
+                return ResponseEntity.ok("Consulta marcada com sucesso!");
+                
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro! Data incorreta..");
+            }
 
-				if(resultConsult instanceof Consults){
-
-					Consults consult = (Consults) resultConsult;
-
-					consult.setDateConsult(dateHours);
-					consultservice.create(consult);
-
-					return ResponseEntity.ok("Consulta marcada com sucesso!");
-				}
-
-			} else {
-
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro! Data incorreta.");
-
-			}
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO! não foi encontrado paciente com id "+id+" O paciente precisa estar cadastrado para realizar uma consulta.");
+        }
+    }
 	
-			// Se qualquer etapa falhar, retorne um erro indicando dados inválidos
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao processar a consulta: dados inválidos.");
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO! não foi encontrado paciente com id "+id+" O paciente precisa estar cadastrado para realizar uma consulta.");
-		}
-
-	}
-
+	@Operation(summary = "Obter todas as consultas ordenadas pela data")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista de consultas retornada com sucesso"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
 	//retornar todas as consultas do dia
 	@GetMapping
 	public ResponseEntity<List<Consults>> getConsultsByDate() {
@@ -96,39 +109,52 @@ public class ControllerConsults {
         return ResponseEntity.ok(consults);
 
     }
-	
+
+    @Operation(summary = "Deletar uma consulta pelo ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Consulta cancelada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Consulta não encontrada. Id pode estar incorreto"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
     //deletar uma consulta
     @DeleteMapping(value="/deletar/{id}")
 	public ResponseEntity<String> Delete(@PathVariable Long id){
 
-		Optional<Consults> result = consultsRepository.findById(id);
+		Optional<Consults> consultsOptional = consultsRepository.findById(id);
 
-		if(result.isPresent()){
+		if(consultsOptional.isPresent()){
 
 			consultsRepository.deleteById(id);
 			return ResponseEntity.ok("Consulta cancelada.");
 
 		} else {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta de "+id+" não encontrada! Id pode está errado, tente novamente.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta de id "+id+" não encontrada! Id pode está errado, tente novamente.");
 
 		}
 
 	}
 
+	@Operation(summary = "Reagendar uma consulta existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Consulta reagendada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Consulta não encontrada. Id pode estar incorreto"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
     //atualizar uma consulta
     @PutMapping(value="/Reagendamento/{id}")
 	public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody Consults updatedConsult){
 
-		Optional<Consults> result = consultsRepository.findById(id);
+		Optional<Consults> consultsOptional = consultsRepository.findById(id);
 
-		if(result.isPresent()){
+		if(consultsOptional.isPresent()){
 			//pegando os dados atuais
-			Consults consults = result.get();
-			consults.setDateConsult(updatedConsult.getDateConsult());
+			Consults consults = consultsOptional.get();
 
-			consultsRepository.save(consults);
-			return ResponseEntity.ok("Consulta reagendada com sucesso!");
+            consults.setDateConsult(updatedConsult.getDateConsult());
+
+            consultsRepository.save(consults);
+            return ResponseEntity.ok("Consulta reagendada com sucesso!");
 
 		} else {
 
