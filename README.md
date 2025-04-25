@@ -5,13 +5,6 @@
 ### Stack Tecnológica:
 Java 17 | Spring Boot 3 | Spring Security | JUnit 5 (Testes Unitários/Integração) | MySQL 8 | Swagger/OpenAPI 3 | Docker
 
-### Requisitos
-
-- java 17
-- MySQL
-- Docker
-- Swagger
-
 ### Como usar
 
 1 . Clone repositório `git clone https://github.com/beantz123/projeto_java`.
