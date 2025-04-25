@@ -3,7 +3,7 @@
 #### Minha API feita em java foi desenvolvida com o objetivo de fornecer um ambiente de gerenciamento de pacientes, consultas e procedimentos a serem feitos em um ambiente clinico.
 
 ### Stack Tecnológica:
-Java 17 | Spring Boot 3 | Spring Security | JUnit 5 (Testes Unitários/Integração) | MySQL 8 | Swagger/OpenAPI 3 | Docker
+Java 17 | Spring Boot 3 | Spring Security | MySQL 8 | Swagger/OpenAPI 3 | Docker
 
 ### Como usar
 
